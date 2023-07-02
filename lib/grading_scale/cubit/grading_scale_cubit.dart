@@ -2,10 +2,18 @@ import 'package:bloc/bloc.dart';
 
 import 'package:notenschluessel/grading_scale/model/grading_scale_model.dart';
 
+double roundToFull(num toRound) => toRound.ceilToDouble();
+double roundToHalf(num toRound) => (toRound * 2).ceil() / 2;
+double roundToQuarter(num toRound) => (toRound * 4).ceil() / 4;
+
 enum RoundingMode {
-  fullPoints,
-  halfPoints,
-  quarterPoints,
+  fullPoints(roundToFull),
+  halfPoints(roundToHalf),
+  quarterPoints(roundToQuarter);
+
+  const RoundingMode(double Function(num) ceilingFn) : _ceil = ceilingFn;
+  final double Function(num) _ceil;
+  double ceil(num toRound) => _ceil(toRound);
 }
 
 class GradingState {
@@ -56,7 +64,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
             return GradingScaleResult(
               grade: e.grade,
               pointsNeeded: pointsNeeded100,
-              pointsNeededRounded: pointsNeeded100.ceilToDouble(),
+              pointsNeededRounded: state.mode.ceil(pointsNeeded100),
             );
           }).toList()
         : const <GradingScaleResult>[];

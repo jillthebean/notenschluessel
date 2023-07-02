@@ -88,6 +88,28 @@ const gradingResultsFor100Points = [
 ];
 
 void main() {
+  group('RoundingMode', () {
+    test('rounds full correctyl', () {
+      const mode = RoundingMode.fullPoints;
+      expect(mode.ceil(0.0001), equals(1));
+      expect(mode.ceil(0.9), equals(1));
+      expect(mode.ceil(0), equals(0));
+    });
+    test('rounds half correctly correctyl', () {
+      const mode = RoundingMode.halfPoints;
+      expect(mode.ceil(0.0001), equals(0.5));
+      expect(mode.ceil(0.9), equals(1));
+      expect(mode.ceil(0), equals(0));
+    });
+    test('rounds quarter correctly correctyl', () {
+      const mode = RoundingMode.quarterPoints;
+      expect(mode.ceil(0.0001), equals(0.25));
+      expect(mode.ceil(0.9), equals(1));
+      expect(mode.ceil(0.25001), equals(0.5));
+      expect(mode.ceil(0.50001), equals(0.75));
+      expect(mode.ceil(0.75001), equals(1));
+    });
+  });
   group('GradingScaleCubit', () {
     test('initial state is 0', () {
       expect(
