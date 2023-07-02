@@ -6,83 +6,99 @@ import 'package:notenschluessel/grading_scale/model/grading_scale_model.dart';
 
 const gradingResultsFor100Points = [
   GradingScaleResult(
-    grade: 15,
+    grade: '15',
     pointsNeeded: 95,
+    percentNeeded: 95,
     pointsNeededRounded: 95,
   ),
   GradingScaleResult(
-    grade: 14,
+    grade: '14',
     pointsNeeded: 90,
+    percentNeeded: 90,
     pointsNeededRounded: 90,
   ),
   GradingScaleResult(
-    grade: 13,
+    grade: '13',
     pointsNeeded: 85,
+    percentNeeded: 85,
     pointsNeededRounded: 85,
   ),
   GradingScaleResult(
-    grade: 12,
+    grade: '12',
     pointsNeeded: 80,
+    percentNeeded: 80,
     pointsNeededRounded: 80,
   ),
   GradingScaleResult(
-    grade: 11,
+    grade: '11',
     pointsNeeded: 75,
+    percentNeeded: 75,
     pointsNeededRounded: 75,
   ),
   GradingScaleResult(
-    grade: 10,
+    grade: '10',
     pointsNeeded: 70,
+    percentNeeded: 70,
     pointsNeededRounded: 70,
   ),
   GradingScaleResult(
-    grade: 9,
+    grade: '09',
     pointsNeeded: 65,
+    percentNeeded: 65,
     pointsNeededRounded: 65,
   ),
   GradingScaleResult(
-    grade: 8,
+    grade: '08',
     pointsNeeded: 60,
+    percentNeeded: 60,
     pointsNeededRounded: 60,
   ),
   GradingScaleResult(
-    grade: 7,
+    grade: '07',
     pointsNeeded: 55,
+    percentNeeded: 55,
     pointsNeededRounded: 55,
   ),
   GradingScaleResult(
-    grade: 6,
+    grade: '06',
     pointsNeeded: 50,
+    percentNeeded: 50,
     pointsNeededRounded: 50,
   ),
   GradingScaleResult(
-    grade: 5,
+    grade: '05',
     pointsNeeded: 45,
+    percentNeeded: 45,
     pointsNeededRounded: 45,
   ),
   GradingScaleResult(
-    grade: 4,
+    grade: '04',
     pointsNeeded: 40,
+    percentNeeded: 40,
     pointsNeededRounded: 40,
   ),
   GradingScaleResult(
-    grade: 3,
+    grade: '03',
     pointsNeeded: 33,
+    percentNeeded: 33,
     pointsNeededRounded: 33,
   ),
   GradingScaleResult(
-    grade: 2,
+    grade: '02',
     pointsNeeded: 27,
+    percentNeeded: 27,
     pointsNeededRounded: 27,
   ),
   GradingScaleResult(
-    grade: 1,
+    grade: '01',
     pointsNeeded: 20,
+    percentNeeded: 20,
     pointsNeededRounded: 20,
   ),
   GradingScaleResult(
-    grade: 0,
+    grade: '00',
     pointsNeeded: 0,
+    percentNeeded: 0,
     pointsNeededRounded: 0,
   ),
 ];
@@ -90,19 +106,19 @@ const gradingResultsFor100Points = [
 void main() {
   group('RoundingMode', () {
     test('rounds full correctyl', () {
-      const mode = RoundingMode.fullPoints;
+      const mode = RoundingMode.full;
       expect(mode.ceil(0.0001), equals(1));
       expect(mode.ceil(0.9), equals(1));
       expect(mode.ceil(0), equals(0));
     });
     test('rounds half correctly correctyl', () {
-      const mode = RoundingMode.halfPoints;
+      const mode = RoundingMode.half;
       expect(mode.ceil(0.0001), equals(0.5));
       expect(mode.ceil(0.9), equals(1));
       expect(mode.ceil(0), equals(0));
     });
     test('rounds quarter correctly correctyl', () {
-      const mode = RoundingMode.quarterPoints;
+      const mode = RoundingMode.quarter;
       expect(mode.ceil(0.0001), equals(0.25));
       expect(mode.ceil(0.9), equals(1));
       expect(mode.ceil(0.25001), equals(0.5));
@@ -118,7 +134,7 @@ void main() {
           const GradingState(
             results: [],
             maxPoints: 0,
-            mode: RoundingMode.fullPoints,
+            mode: RoundingMode.full,
           ),
         ),
       );
@@ -139,7 +155,7 @@ void main() {
       build: GradingScaleCubit.new,
       act: (cubit) => cubit.setPoints(100),
       verify: (bloc) {
-        expect(bloc.state.mode, equals(RoundingMode.fullPoints));
+        expect(bloc.state.mode, equals(RoundingMode.full));
         expect(bloc.state.maxPoints, equals(100));
         expect(bloc.state.results, orderedEquals(gradingResultsFor100Points));
       },

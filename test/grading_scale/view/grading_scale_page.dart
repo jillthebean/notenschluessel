@@ -27,7 +27,7 @@ void main() {
 
     testWidgets('renders current count', (tester) async {
       const state = GradingState(
-        mode: RoundingMode.fullPoints,
+        mode: RoundingMode.full,
         results: [],
         maxPoints: 100,
       );

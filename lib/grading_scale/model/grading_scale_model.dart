@@ -107,12 +107,14 @@ const gradingScalesNotes = [
 class GradingScaleResult {
   const GradingScaleResult({
     required this.grade,
+    required this.percentNeeded,
     required this.pointsNeeded,
     required this.pointsNeededRounded,
   });
 
-  final int grade;
+  final String grade;
   final double pointsNeeded;
+  final int percentNeeded;
   final double pointsNeededRounded;
 
   @override

@@ -1,0 +1,11 @@
+{
+    "@@locale": "de",
+    "gradingScaleAppBarTitle": "Notenschlüssel",
+    "gradingScaleTitleGrade": "Note",
+    "gradingScaleTitlePercent": "%",
+    "gradingScaleTitlePoints": "Punkte",
+    "gradingScaleTitlePointsRounded": "Gerund.",
+    "roundingModeFull": "1 Punkt",
+    "roundingModeHalf": "1/2 Punkte",
+    "roundingModeQuarter": "1/4 Punkte"
+}

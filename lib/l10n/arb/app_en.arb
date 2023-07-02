@@ -1,7 +1,14 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+    "gradingScaleAppBarTitle": "Grading Scale",
+    "@gradingScaleAppBarTitle": {
+        "description": "Text shown in the AppBar of the Grading Scale Page"
+    },
+    "gradingScaleTitleGrade": "Grade",
+    "gradingScaleTitlePercent": "%",
+    "gradingScaleTitlePoints": "Points",
+    "gradingScaleTitlePointsRounded": "Rounded",
+    "roundingModeFull": "1 Point",
+    "roundingModeHalf": "1/2 Points",
+    "roundingModeQuarter": "1/4 Points"
 }

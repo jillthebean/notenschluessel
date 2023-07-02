@@ -24,7 +24,7 @@ class GradingScaleView extends StatelessWidget {
     final l10n = context.l10n;
     final grading = context.watch<GradingScaleCubit>();
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
+      appBar: AppBar(title: Text(l10n.gradingScaleAppBarTitle)),
       body: Column(
         children: [
           PointsInput(
@@ -33,6 +33,12 @@ class GradingScaleView extends StatelessWidget {
           RoundingModeInput(
             mode: grading.state.mode,
             onChanged: grading.setMode,
+          ),
+          ResultLine(
+            grade: l10n.gradingScaleTitleGrade,
+            percentNeeded: l10n.gradingScaleTitlePercent,
+            pointsNeeded: l10n.gradingScaleTitlePoints,
+            pointsNeededRequired: l10n.gradingScaleTitlePointsRounded,
           ),
           ...grading.state.results.map(ResultLine.fromGradeResult),
         ],
@@ -94,13 +100,25 @@ class RoundingModeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: RoundingMode.values.map(_buildListTile).toList(),
+      children: RoundingMode.values
+          .map(
+            (e) => _buildListTile(
+              e,
+              switch (e) {
+                (RoundingMode.full) => l10n.roundingModeFull,
+                (RoundingMode.half) => l10n.roundingModeHalf,
+                (RoundingMode.quarter) => l10n.roundingModeQuarter,
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
-  Widget _buildListTile(RoundingMode roundingMode) {
+  Widget _buildListTile(RoundingMode roundingMode, String label) {
     return SizedBox(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -110,7 +128,7 @@ class RoundingModeInput extends StatelessWidget {
             groupValue: mode,
             onChanged: onChanged,
           ),
-          Text(roundingMode.name),
+          Text(label),
         ],
       ),
     );
@@ -120,6 +138,7 @@ class RoundingModeInput extends StatelessWidget {
 class ResultLine extends StatelessWidget {
   const ResultLine({
     required this.grade,
+    required this.percentNeeded,
     required this.pointsNeeded,
     required this.pointsNeededRequired,
     super.key,
@@ -128,12 +147,13 @@ class ResultLine extends StatelessWidget {
   ResultLine.fromGradeResult(
     GradingScaleResult result, {
     super.key,
-  })  : grade =
-            result.grade < 10 ? '0${result.grade}' : result.grade.toString(),
+  })  : grade = result.grade,
+        percentNeeded = '${result.percentNeeded}%',
         pointsNeeded = result.pointsNeeded.toStringAsFixed(2),
         pointsNeededRequired = result.pointsNeededRounded.toStringAsFixed(2);
 
   final String grade;
+  final String percentNeeded;
   final String pointsNeeded;
   final String pointsNeededRequired;
 
@@ -143,6 +163,7 @@ class ResultLine extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _ResultBox(grade),
+        _ResultBox(percentNeeded),
         _ResultBox(pointsNeeded),
         _ResultBox(pointsNeededRequired),
       ],
@@ -151,13 +172,13 @@ class ResultLine extends StatelessWidget {
 }
 
 class _ResultBox extends StatelessWidget {
-  const _ResultBox(this.data, {super.key});
+  const _ResultBox(this.data);
   final String data;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 50,
+      width: 75,
       height: 25,
       child: Text(
         data,
