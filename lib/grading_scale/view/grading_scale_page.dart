@@ -23,31 +23,105 @@ class GradingScaleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final grading = context.watch<GradingScaleCubit>();
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.gradingScaleAppBarTitle)),
-      body: Column(
-        children: [
-          PointsInput(
-            onChange: grading.setPoints,
+        appBar: AppBar(title: Text(l10n.gradingScaleAppBarTitle)),
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > 600) {
+                return const _LandscapeModeView();
+              }
+              return const _PortraitModeView();
+            },
           ),
-          Text(
-            l10n.gradingScaleInputRoundMode,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-          RoundingModeInput(
-            mode: grading.state.mode,
-            onChanged: grading.setMode,
-          ),
-          ResultLine(
-            grade: l10n.gradingScaleTitleGrade,
-            percentNeeded: l10n.gradingScaleTitlePercent,
-            pointsNeeded: l10n.gradingScaleTitlePoints,
-            pointsNeededRequired: l10n.gradingScaleTitlePointsRounded,
-          ),
-          ...grading.state.results.map(ResultLine.fromGradeResult),
-        ],
+        ));
+  }
+}
+
+class _PortraitModeView extends StatelessWidget {
+  const _PortraitModeView();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final grading = context.watch<GradingScaleCubit>();
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PointsInput(
+              onChange: grading.setPoints,
+              initialValue: grading.state.maxPoints,
+            ),
+            Text(
+              l10n.gradingScaleInputRoundMode,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            RoundingModeInput(
+              mode: grading.state.mode,
+              onChanged: grading.setMode,
+            ),
+            ResultLine(
+              grade: l10n.gradingScaleTitleGrade,
+              percentNeeded: l10n.gradingScaleTitlePercent,
+              pointsNeeded: l10n.gradingScaleTitlePoints,
+              pointsNeededRequired: l10n.gradingScaleTitlePointsRounded,
+            ),
+            ...grading.state.results.map(ResultLine.fromGradeResult),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _LandscapeModeView extends StatelessWidget {
+  const _LandscapeModeView();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final grading = context.watch<GradingScaleCubit>();
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PointsInput(
+              onChange: grading.setPoints,
+              initialValue: grading.state.maxPoints,
+            ),
+            Text(
+              l10n.gradingScaleInputRoundMode,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            RoundingModeInput(
+              mode: grading.state.mode,
+              onChanged: grading.setMode,
+              vertical: true,
+            ),
+          ],
+        ),
+        SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ResultLine(
+                grade: l10n.gradingScaleTitleGrade,
+                percentNeeded: l10n.gradingScaleTitlePercent,
+                pointsNeeded: l10n.gradingScaleTitlePoints,
+                pointsNeededRequired: l10n.gradingScaleTitlePointsRounded,
+              ),
+              ...grading.state.results.map(ResultLine.fromGradeResult),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
@@ -55,9 +129,11 @@ class GradingScaleView extends StatelessWidget {
 class PointsInput extends StatefulWidget {
   const PointsInput({
     required this.onChange,
+    required this.initialValue,
     super.key,
   });
 
+  final int initialValue;
   final void Function(int) onChange;
 
   @override
@@ -65,7 +141,9 @@ class PointsInput extends StatefulWidget {
 }
 
 class _PointsInputState extends State<PointsInput> {
-  late final _controller = TextEditingController(text: '0');
+  late final _controller = TextEditingController(
+    text: widget.initialValue.toString(),
+  );
 
   @override
   void dispose() {
@@ -92,8 +170,8 @@ class _PointsInputState extends State<PointsInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
+    return SizedBox(
+      width: 100,
       child: TextFormField(
         controller: _controller,
         autofocus: true,
@@ -122,30 +200,39 @@ class RoundingModeInput extends StatelessWidget {
   const RoundingModeInput({
     required this.mode,
     required this.onChanged,
+    this.vertical = false,
     super.key,
   });
 
   final RoundingMode mode;
   final void Function(RoundingMode?) onChanged;
+  final bool vertical;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: RoundingMode.values
-          .map(
-            (e) => _buildListTile(
-              e,
-              switch (e) {
-                (RoundingMode.full) => l10n.roundingModeFull,
-                (RoundingMode.half) => l10n.roundingModeHalf,
-                (RoundingMode.quarter) => l10n.roundingModeQuarter,
-              },
-            ),
+    final inputs = RoundingMode.values
+        .map(
+          (e) => _buildListTile(
+            e,
+            switch (e) {
+              (RoundingMode.full) => l10n.roundingModeFull,
+              (RoundingMode.half) => l10n.roundingModeHalf,
+              (RoundingMode.quarter) => l10n.roundingModeQuarter,
+            },
+          ),
+        )
+        .toList();
+    return vertical
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: inputs,
           )
-          .toList(),
-    );
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: inputs);
   }
 
   Widget _buildListTile(RoundingMode roundingMode, String label) {
