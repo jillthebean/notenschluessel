@@ -94,24 +94,25 @@ class RoundingModeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: RoundingMode.values.map(_buildListTile).toList(),
     );
   }
 
   Widget _buildListTile(RoundingMode roundingMode) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Radio<RoundingMode>(
-          value: roundingMode,
-          groupValue: mode,
-          onChanged: onChanged,
-        ),
-        Text(roundingMode.name),
-      ],
+    return SizedBox(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio<RoundingMode>(
+            value: roundingMode,
+            groupValue: mode,
+            onChanged: onChanged,
+          ),
+          Text(roundingMode.name),
+        ],
+      ),
     );
   }
 }
@@ -155,6 +156,14 @@ class _ResultBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(data, style: Theme.of(context).textTheme.bodyLarge);
+    return SizedBox(
+      width: 50,
+      height: 25,
+      child: Text(
+        data,
+        textAlign: TextAlign.end,
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+    );
   }
 }
