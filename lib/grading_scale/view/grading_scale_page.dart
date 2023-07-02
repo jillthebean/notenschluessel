@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notenschluessel/grading_scale/cubit/grading_scale_cubit.dart';
-import 'package:notenschluessel/grading_scale/model/grading_scale_model.dart';
 import 'package:notenschluessel/grading_scale/widgets/widgets.dart';
 import 'package:notenschluessel/l10n/l10n.dart';
 

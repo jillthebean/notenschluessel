@@ -38,7 +38,8 @@ class RoundingModeInput extends StatelessWidget {
         : Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: inputs);
+            children: inputs,
+          );
   }
 
   Widget _buildListTile(RoundingMode roundingMode, String label) {
