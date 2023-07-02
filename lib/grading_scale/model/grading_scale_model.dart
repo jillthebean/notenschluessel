@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class _GradingScaleNoteSetup {
   const _GradingScaleNoteSetup({
     required this.grade,
@@ -101,6 +103,7 @@ const gradingScalesNotes = [
   ),
 ];
 
+@immutable
 class GradingScaleResult {
   const GradingScaleResult({
     required this.grade,
@@ -111,4 +114,23 @@ class GradingScaleResult {
   final int grade;
   final double pointsNeeded;
   final double pointsNeededRounded;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! GradingScaleResult) {
+      return false;
+    }
+    return other.grade == grade &&
+        other.pointsNeeded == pointsNeeded &&
+        other.pointsNeededRounded == pointsNeededRounded;
+  }
+
+  @override
+  int get hashCode =>
+      grade.hashCode + pointsNeeded.hashCode + pointsNeededRounded.hashCode;
+
+  @override
+  String toString() {
+    return 'GradingScaleResult($grade, $pointsNeeded)';
+  }
 }

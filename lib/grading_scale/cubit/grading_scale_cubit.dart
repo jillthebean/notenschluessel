@@ -38,25 +38,34 @@ class GradingScaleCubit extends Cubit<GradingState> {
         ),
       );
 
-  void setMode(RoundingMode mode) => _calculate(
-        GradingState(
-          mode: mode,
-          results: [],
-          maxPoints: state.maxPoints,
-        ),
-      );
+  void setMode(RoundingMode? mode) => mode != null
+      ? _calculate(
+          GradingState(
+            mode: mode,
+            results: [],
+            maxPoints: state.maxPoints,
+          ),
+        )
+      : null;
 
   void _calculate(GradingState state) {
-    final results = gradingScalesNotes.map((e) {
-      final pointsNeeded100 =
-          (state.maxPoints.toDouble() * e.lowerBound.toDouble() * 100).round();
-      return GradingScaleResult(
-        grade: e.grade,
-        pointsNeeded: pointsNeeded100.toDouble() / 100,
-        pointsNeededRounded: (pointsNeeded100.toDouble() / 100).ceilToDouble(),
-      );
-    }).toList();
-    emit(GradingState(
-        mode: state.mode, results: results, maxPoints: state.maxPoints));
+    final results = state.maxPoints > 0
+        ? gradingScalesNotes.map((e) {
+            final pointsNeeded100 =
+                state.maxPoints.toDouble() * e.lowerBound.toDouble() / 100;
+            return GradingScaleResult(
+              grade: e.grade,
+              pointsNeeded: pointsNeeded100,
+              pointsNeededRounded: pointsNeeded100.ceilToDouble(),
+            );
+          }).toList()
+        : const <GradingScaleResult>[];
+    emit(
+      GradingState(
+        mode: state.mode,
+        results: results,
+        maxPoints: state.maxPoints,
+      ),
+    );
   }
 }

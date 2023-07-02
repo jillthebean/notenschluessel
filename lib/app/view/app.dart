@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notenschluessel/counter/counter.dart';
+import 'package:notenschluessel/grading_scale/view/grading_scale_page.dart';
 import 'package:notenschluessel/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      home: const GradingScalePage(),
     );
   }
 }
