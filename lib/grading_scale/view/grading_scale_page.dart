@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notenschluessel/grading_scale/cubit/grading_scale_cubit.dart';
 import 'package:notenschluessel/grading_scale/model/grading_scale_model.dart';
@@ -10,7 +11,7 @@ class GradingScalePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GradingScaleCubit(),
+      create: (_) => GradingScaleCubit()..setPoints(30),
       child: const GradingScaleView(),
     );
   }
@@ -29,6 +30,10 @@ class GradingScaleView extends StatelessWidget {
         children: [
           PointsInput(
             onChange: grading.setPoints,
+          ),
+          Text(
+            l10n.gradingScaleInputRoundMode,
+            style: Theme.of(context).textTheme.labelLarge,
           ),
           RoundingModeInput(
             mode: grading.state.mode,
@@ -60,7 +65,7 @@ class PointsInput extends StatefulWidget {
 }
 
 class _PointsInputState extends State<PointsInput> {
-  final _controller = TextEditingController();
+  late final _controller = TextEditingController(text: '0');
 
   @override
   void dispose() {
@@ -79,11 +84,36 @@ class _PointsInputState extends State<PointsInput> {
     });
   }
 
+  bool validText(String? e) {
+    if (e == null || e.isEmpty) return true;
+    final input = int.tryParse(e);
+    return input != null && input > 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: TextField(controller: _controller),
+      child: TextFormField(
+        controller: _controller,
+        autofocus: true,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: context.l10n.gradingScaleInputMaxPoints,
+        ),
+        inputFormatters: [
+          TextInputFormatter.withFunction(
+            (oldValue, newValue) =>
+                validText(newValue.text) ? newValue : oldValue,
+          )
+        ],
+        validator: (e) {
+          if (validText(e)) {
+            return context.l10n.gradingScaleInputMaxPointsError;
+          }
+          return null;
+        },
+      ),
     );
   }
 }

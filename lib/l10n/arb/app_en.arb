@@ -4,6 +4,9 @@
     "@gradingScaleAppBarTitle": {
         "description": "Text shown in the AppBar of the Grading Scale Page"
     },
+    "gradingScaleInputMaxPoints": "Points available",
+    "gradingScaleInputMaxPointsError": "Only positive integer values",
+    "gradingScaleInputRoundMode": "Rounding mode (always ceiled)",
     "gradingScaleTitleGrade": "Grade",
     "gradingScaleTitlePercent": "%",
     "gradingScaleTitlePoints": "Points",

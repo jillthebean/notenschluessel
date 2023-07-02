@@ -1,6 +1,9 @@
 {
     "@@locale": "de",
     "gradingScaleAppBarTitle": "Notenschlüssel",
+    "gradingScaleInputMaxPoints": "Punktzahl",
+    "gradingScaleInputMaxPointsError": "Nur positive ganze Zahlen",
+    "gradingScaleInputRoundMode": "Rundungmodus (immer aufgerundet)",
     "gradingScaleTitleGrade": "Note",
     "gradingScaleTitlePercent": "%",
     "gradingScaleTitlePoints": "Punkte",
