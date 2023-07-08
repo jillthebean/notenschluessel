@@ -54,6 +54,7 @@ class _PointsInputState extends State<PointsInput> {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: context.l10n.gradingScaleInputMaxPoints,
+          labelStyle: Theme.of(context).textTheme.labelLarge,
         ),
         inputFormatters: [
           TextInputFormatter.withFunction(

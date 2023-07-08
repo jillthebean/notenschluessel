@@ -10,6 +10,16 @@ A Very Good Project created by Very Good CLI.
 
 ---
 
+![example_screenshot]
+
+This project provides an easy grading scale calulator for german teachers.
+The default distribution is set up according to official specification:
+[Verordnung - Schul- und Prüfungsordnung -
+über die gymnasiale Oberstufe und die Abiturprüfung im Saarland
+(GOS-VO) Anlage 14](https://recht.saarland.de/bssl/document/jlr-OberStVSL2007V3Anlage14)
+
+
+
 ## Getting Started 🚀
 
 This project contains 3 flavors:
@@ -34,6 +44,23 @@ $ flutter run --flavor production --target lib/main_production.dart
 _\*Notenschluessel works on iOS, Android, Web, and Windows._
 
 ---
+
+## Building the app
+
+To build the app locally for web, run the following command:
+```
+flutter build web --release -t lib/main_production.dart
+```
+
+To build the app for gh-pages, run the following command:
+```
+flutter build web --release --base-href=/notenschluessel/ -t lib/main_production.dart
+```
+
+To build a distributable debug APK, run the following command:
+```
+flutter build apk --flavor production --debug -t lib/main_production.dart
+```
 
 ## Running Tests 🧪
 
@@ -155,6 +182,7 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 ```
 
 [coverage_badge]: coverage_badge.svg
+[example_screenshot]: public/example.png
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
