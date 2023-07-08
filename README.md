@@ -12,7 +12,7 @@ A Very Good Project created by Very Good CLI.
 
 ![example_screenshot]
 
-This project provides an easy grading scale calulator for german teachers.
+This project provides an easy grading scale calculator for german teachers.
 The default distribution is set up according to official specification:
 [Verordnung - Schul- und Prüfungsordnung -
 über die gymnasiale Oberstufe und die Abiturprüfung im Saarland
