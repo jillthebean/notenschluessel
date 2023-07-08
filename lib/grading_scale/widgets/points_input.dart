@@ -41,7 +41,7 @@ class _PointsInputState extends State<PointsInput> {
   bool validText(String? e) {
     if (e == null || e.isEmpty) return true;
     final input = int.tryParse(e);
-    return input != null && input > 1;
+    return input != null && input > 0;
   }
 
   @override
@@ -62,12 +62,6 @@ class _PointsInputState extends State<PointsInput> {
                 validText(newValue.text) ? newValue : oldValue,
           )
         ],
-        validator: (e) {
-          if (validText(e)) {
-            return context.l10n.gradingScaleInputMaxPointsError;
-          }
-          return null;
-        },
       ),
     );
   }
