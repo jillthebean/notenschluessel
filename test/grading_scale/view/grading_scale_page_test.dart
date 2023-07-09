@@ -54,13 +54,13 @@ void main() {
 
     testWidgets('changes correctly into edit mode', (tester) async {
       await tester.pumpApp(const GradingScalePage());
-      expect(find.byType(IconButton), findsOneWidget);
-      await tester.tap(find.byType(IconButton));
+      expect(find.byType(IconButton), findsNWidgets(2));
+      await tester.tap(find.byType(IconButton).last);
       await tester.pumpAndSettle();
       expect(find.byType(Slider), findsNWidgets(15));
       await tester.drag(find.byType(Slider).first, const Offset(100, 0));
 
-      await tester.tap(find.byType(IconButton));
+      await tester.tap(find.byType(IconButton).first);
     });
   });
 }
