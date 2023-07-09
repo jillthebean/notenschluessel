@@ -16,7 +16,7 @@ This project provides an easy grading scale calculator for german teachers.
 The default distribution is set up according to official specification:
 [Verordnung - Schul- und Prüfungsordnung -
 über die gymnasiale Oberstufe und die Abiturprüfung im Saarland
-(GOS-VO) Anlage 14](https://recht.saarland.de/bssl/document/jlr-OberStVSL2007V3Anlage14)
+(GOS-VO) Anlage 14][scaling_reference]
 
 
 
@@ -187,6 +187,7 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
+[scaling_reference]: https://recht.saarland.de/bssl/document/jlr-OberStVSL2007V3Anlage14
 [very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
 [very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
 [very_good_cli_link]: https://github.com/VeryGoodOpenSource/very_good_cli

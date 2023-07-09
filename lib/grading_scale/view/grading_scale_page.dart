@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notenschluessel/grading_scale/cubit/grading_scale_cubit.dart';
 import 'package:notenschluessel/grading_scale/widgets/widgets.dart';
 import 'package:notenschluessel/l10n/l10n.dart';
+import 'package:notenschluessel/utils/open_url.dart';
 
 class GradingScalePage extends StatelessWidget {
   const GradingScalePage({super.key});
@@ -30,7 +31,17 @@ class _GradingScaleViewState extends State<GradingScaleView> {
     final l10n = context.l10n;
     final grading = context.watch<GradingScaleCubit>();
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.gradingScaleAppBarTitle)),
+      appBar: AppBar(
+        title: Text(l10n.gradingScaleAppBarTitle),
+        actions: [
+          IconButton(
+            onPressed: () => openUrl(
+              'https://recht.saarland.de/bssl/document/jlr-OberStVSL2007V3Anlage14',
+            ),
+            icon: const Icon(Icons.open_in_new),
+          )
+        ],
+      ),
       body: SafeArea(
         child: isEdit
             ? GradingWeightForm(
@@ -40,7 +51,7 @@ class _GradingScaleViewState extends State<GradingScaleView> {
             : const _GradingScaleResultsView(),
       ),
       floatingActionButton: IconButton(
-        icon: const Icon(Icons.edit),
+        icon: Icon(isEdit ? Icons.done : Icons.edit),
         onPressed: () {
           setState(() {
             isEdit = !isEdit;
