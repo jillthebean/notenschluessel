@@ -61,13 +61,24 @@ class GradingScaleCubit extends Cubit<GradingState> {
         )
       : null;
 
+  void setWeight(GradingScaleNoteSetup weight) => _calculate(
+        GradingState(
+          mode: state.mode,
+          results: [],
+          maxPoints: state.maxPoints,
+          gradingWeight: state.gradingWeight
+              .map((e) => e.grade == weight.grade ? weight : e)
+              .toList(),
+        ),
+      );
+
   void _calculate(GradingState state) {
     final results = state.maxPoints > 0
         ? state.gradingWeight.map((e) {
             final pointsNeeded100 =
                 state.maxPoints.toDouble() * e.lowerBound.toDouble() / 100;
             return GradingScaleResult(
-              grade: e.grade < 10 ? '0${e.grade}' : e.grade.toString(),
+              grade: e.gradeString,
               pointsNeeded: pointsNeeded100,
               pointsNeededRounded: state.mode.ceil(pointsNeeded100),
               percentNeeded: e.lowerBound,

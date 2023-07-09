@@ -9,6 +9,18 @@ class GradingScaleNoteSetup {
   final int grade;
   final int lowerBound;
   final int upperBound;
+
+  String get gradeString => grade < 10 ? '0$grade' : grade.toString();
+
+  GradingScaleNoteSetup copyWith({
+    int? grade,
+    int? lowerBound,
+    int? upperBound,
+  }) =>
+      GradingScaleNoteSetup(
+          grade: grade ?? this.grade,
+          lowerBound: lowerBound ?? this.lowerBound,
+          upperBound: upperBound ?? this.upperBound);
 }
 
 enum GradingCategory {

@@ -24,7 +24,7 @@ class GradingScaleView extends StatefulWidget {
 }
 
 class _GradingScaleViewState extends State<GradingScaleView> {
-  bool isEdit = false;
+  bool isEdit = true;
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -35,7 +35,7 @@ class _GradingScaleViewState extends State<GradingScaleView> {
         child: isEdit
             ? GradingWeightForm(
                 weights: grading.state.gradingWeight,
-                onChange: (_) {},
+                onChange: grading.setWeight,
               )
             : const _GradingScaleResultsView(),
       ),
