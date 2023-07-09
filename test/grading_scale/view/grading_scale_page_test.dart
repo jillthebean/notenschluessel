@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:notenschluessel/grading_scale/grading_scale.dart';
+import 'package:notenschluessel/grading_scale/model/grading_scale_model.dart';
 
 import '../../helpers/helpers.dart';
 
@@ -32,6 +33,7 @@ void main() {
         mode: RoundingMode.full,
         results: [],
         maxPoints: 30,
+        gradingWeight: gradingScalesNotes,
       );
       when(() => gradingScaleCubit.state).thenReturn(state);
       await tester.pumpApp(

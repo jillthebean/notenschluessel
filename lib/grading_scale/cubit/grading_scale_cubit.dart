@@ -19,11 +19,13 @@ enum RoundingMode {
 class GradingState {
   const GradingState({
     required this.mode,
+    required this.gradingWeight,
     required this.results,
     required this.maxPoints,
   });
 
   final RoundingMode mode;
+  final List<GradingScaleNoteSetup> gradingWeight;
   final List<GradingScaleResult> results;
   final int maxPoints;
 }
@@ -35,6 +37,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
             maxPoints: 0,
             results: [],
             mode: RoundingMode.full,
+            gradingWeight: gradingScalesNotes,
           ),
         );
 
@@ -43,6 +46,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
           mode: state.mode,
           results: [],
           maxPoints: points,
+          gradingWeight: state.gradingWeight,
         ),
       );
 
@@ -52,13 +56,14 @@ class GradingScaleCubit extends Cubit<GradingState> {
             mode: mode,
             results: [],
             maxPoints: state.maxPoints,
+            gradingWeight: state.gradingWeight,
           ),
         )
       : null;
 
   void _calculate(GradingState state) {
     final results = state.maxPoints > 0
-        ? gradingScalesNotes.map((e) {
+        ? state.gradingWeight.map((e) {
             final pointsNeeded100 =
                 state.maxPoints.toDouble() * e.lowerBound.toDouble() / 100;
             return GradingScaleResult(
@@ -74,6 +79,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
         mode: state.mode,
         results: results,
         maxPoints: state.maxPoints,
+        gradingWeight: state.gradingWeight,
       ),
     );
   }

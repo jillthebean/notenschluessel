@@ -234,6 +234,7 @@ void main() {
             results: [],
             maxPoints: 0,
             mode: RoundingMode.full,
+            gradingWeight: gradingScalesNotes,
           ),
         ),
       );

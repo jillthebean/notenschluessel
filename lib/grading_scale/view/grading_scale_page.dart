@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notenschluessel/grading_scale/cubit/grading_scale_cubit.dart';
-import 'package:notenschluessel/grading_scale/model/grading_scale_model.dart';
 import 'package:notenschluessel/grading_scale/widgets/widgets.dart';
 import 'package:notenschluessel/l10n/l10n.dart';
 
@@ -17,24 +16,53 @@ class GradingScalePage extends StatelessWidget {
   }
 }
 
-class GradingScaleView extends StatelessWidget {
+class GradingScaleView extends StatefulWidget {
   const GradingScaleView({super.key});
 
   @override
+  State<GradingScaleView> createState() => _GradingScaleViewState();
+}
+
+class _GradingScaleViewState extends State<GradingScaleView> {
+  bool isEdit = false;
+  @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final grading = context.watch<GradingScaleCubit>();
     return Scaffold(
       appBar: AppBar(title: Text(l10n.gradingScaleAppBarTitle)),
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
-              return _buildLandscape(context);
-            }
-            return _buildPortrait(context);
-          },
-        ),
+        child: isEdit
+            ? GradingWeightForm(
+                weights: grading.state.gradingWeight,
+                onChange: (_) {},
+              )
+            : const _GradingScaleResultsView(),
       ),
+      floatingActionButton: IconButton(
+        icon: const Icon(Icons.edit),
+        onPressed: () {
+          setState(() {
+            isEdit = !isEdit;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class _GradingScaleResultsView extends StatelessWidget {
+  const _GradingScaleResultsView();
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 600) {
+          return _buildLandscape(context);
+        }
+        return _buildPortrait(context);
+      },
     );
   }
 
@@ -48,7 +76,7 @@ class GradingScaleView extends StatelessWidget {
         children: [
           ..._buildInputs(grading, l10n, context, false),
           Expanded(
-            child: _GradingScaleResultWidget(
+            child: GradingScaleResultWidget(
               results: grading.state.results,
             ),
           )
@@ -73,7 +101,7 @@ class GradingScaleView extends StatelessWidget {
             children: _buildInputs(grading, l10n, context, true),
           ),
         ),
-        _GradingScaleResultWidget(
+        GradingScaleResultWidget(
           results: grading.state.results,
         )
       ],
@@ -101,31 +129,5 @@ class GradingScaleView extends StatelessWidget {
         vertical: vertical,
       ),
     ];
-  }
-}
-
-class _GradingScaleResultWidget extends StatelessWidget {
-  const _GradingScaleResultWidget({
-    required this.results,
-  });
-
-  final List<GradingScaleResult> results;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          ResultLine(
-            grade: l10n.gradingScaleTitleGrade,
-            percentNeeded: l10n.gradingScaleTitlePercent,
-            pointsNeeded: l10n.gradingScaleTitlePoints,
-            pointsNeededRequired: l10n.gradingScaleTitlePointsRounded,
-          ),
-          ...results.map(ResultLine.fromGradeResult),
-        ],
-      ),
-    );
   }
 }
