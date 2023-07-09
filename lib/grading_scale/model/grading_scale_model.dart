@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-class GradingScaleNoteSetup {
-  const GradingScaleNoteSetup({
+@immutable
+class GradingWeight {
+  const GradingWeight({
     required this.grade,
     required this.lowerBound,
     required this.upperBound,
@@ -12,15 +13,35 @@ class GradingScaleNoteSetup {
 
   String get gradeString => grade < 10 ? '0$grade' : grade.toString();
 
-  GradingScaleNoteSetup copyWith({
+  GradingWeight copyWith({
     int? grade,
     int? lowerBound,
     int? upperBound,
   }) =>
-      GradingScaleNoteSetup(
-          grade: grade ?? this.grade,
-          lowerBound: lowerBound ?? this.lowerBound,
-          upperBound: upperBound ?? this.upperBound);
+      GradingWeight(
+        grade: grade ?? this.grade,
+        lowerBound: lowerBound ?? this.lowerBound,
+        upperBound: upperBound ?? this.upperBound,
+      );
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! GradingWeight) {
+      return false;
+    }
+    return other.grade == grade &&
+        other.lowerBound == lowerBound &&
+        other.upperBound == upperBound;
+  }
+
+  @override
+  int get hashCode =>
+      grade.hashCode + lowerBound.hashCode + upperBound.hashCode;
+
+  @override
+  String toString() {
+    return 'GradingWeight($grade, $lowerBound)';
+  }
 }
 
 enum GradingCategory {
@@ -32,83 +53,83 @@ enum GradingCategory {
   ungenuegend,
 }
 
-const gradingScalesNotes = [
-  GradingScaleNoteSetup(
+const defaultGradingWeights = [
+  GradingWeight(
     grade: 15,
     lowerBound: 95,
     upperBound: 100,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 14,
     lowerBound: 90,
     upperBound: 95,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 13,
     lowerBound: 85,
     upperBound: 90,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 12,
     lowerBound: 80,
     upperBound: 85,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 11,
     lowerBound: 75,
     upperBound: 80,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 10,
     lowerBound: 70,
     upperBound: 75,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 9,
     lowerBound: 65,
     upperBound: 70,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 8,
     lowerBound: 60,
     upperBound: 65,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 7,
     lowerBound: 55,
     upperBound: 60,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 6,
     lowerBound: 50,
     upperBound: 55,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 5,
     lowerBound: 45,
     upperBound: 50,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 4,
     lowerBound: 40,
     upperBound: 45,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 3,
     lowerBound: 33,
     upperBound: 40,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 2,
     lowerBound: 27,
     upperBound: 33,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 1,
     lowerBound: 20,
     upperBound: 27,
   ),
-  GradingScaleNoteSetup(
+  GradingWeight(
     grade: 0,
     lowerBound: 0,
     upperBound: 20,

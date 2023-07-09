@@ -25,7 +25,7 @@ class GradingState {
   });
 
   final RoundingMode mode;
-  final List<GradingScaleNoteSetup> gradingWeight;
+  final List<GradingWeight> gradingWeight;
   final List<GradingScaleResult> results;
   final int maxPoints;
 }
@@ -37,7 +37,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
             maxPoints: 0,
             results: [],
             mode: RoundingMode.full,
-            gradingWeight: gradingScalesNotes,
+            gradingWeight: defaultGradingWeights,
           ),
         );
 
@@ -61,7 +61,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
         )
       : null;
 
-  void setWeight(GradingScaleNoteSetup weight) => _calculate(
+  void setWeight(GradingWeight weight) => _calculate(
         GradingState(
           mode: state.mode,
           results: [],

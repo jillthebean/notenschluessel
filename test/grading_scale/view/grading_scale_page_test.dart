@@ -33,7 +33,7 @@ void main() {
         mode: RoundingMode.full,
         results: [],
         maxPoints: 30,
-        gradingWeight: gradingScalesNotes,
+        gradingWeight: defaultGradingWeights,
       );
       when(() => gradingScaleCubit.state).thenReturn(state);
       await tester.pumpApp(

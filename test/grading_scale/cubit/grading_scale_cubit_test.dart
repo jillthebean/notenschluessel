@@ -202,6 +202,105 @@ const gradingResultsFor25PointsRoundedToHalf = [
   ),
 ];
 
+const gradingResultsFor100PointsCustomWeight = [
+  GradingScaleResult(
+    grade: '15',
+    pointsNeeded: 100,
+    percentNeeded: 100,
+    pointsNeededRounded: 100,
+  ),
+  GradingScaleResult(
+    grade: '14',
+    pointsNeeded: 90,
+    percentNeeded: 90,
+    pointsNeededRounded: 90,
+  ),
+  GradingScaleResult(
+    grade: '13',
+    pointsNeeded: 85,
+    percentNeeded: 85,
+    pointsNeededRounded: 85,
+  ),
+  GradingScaleResult(
+    grade: '12',
+    pointsNeeded: 80,
+    percentNeeded: 80,
+    pointsNeededRounded: 80,
+  ),
+  GradingScaleResult(
+    grade: '11',
+    pointsNeeded: 75,
+    percentNeeded: 75,
+    pointsNeededRounded: 75,
+  ),
+  GradingScaleResult(
+    grade: '10',
+    pointsNeeded: 70,
+    percentNeeded: 70,
+    pointsNeededRounded: 70,
+  ),
+  GradingScaleResult(
+    grade: '09',
+    pointsNeeded: 65,
+    percentNeeded: 65,
+    pointsNeededRounded: 65,
+  ),
+  GradingScaleResult(
+    grade: '08',
+    pointsNeeded: 60,
+    percentNeeded: 60,
+    pointsNeededRounded: 60,
+  ),
+  GradingScaleResult(
+    grade: '07',
+    pointsNeeded: 55,
+    percentNeeded: 55,
+    pointsNeededRounded: 55,
+  ),
+  GradingScaleResult(
+    grade: '06',
+    pointsNeeded: 50,
+    percentNeeded: 50,
+    pointsNeededRounded: 50,
+  ),
+  GradingScaleResult(
+    grade: '05',
+    pointsNeeded: 45,
+    percentNeeded: 45,
+    pointsNeededRounded: 45,
+  ),
+  GradingScaleResult(
+    grade: '04',
+    pointsNeeded: 40,
+    percentNeeded: 40,
+    pointsNeededRounded: 40,
+  ),
+  GradingScaleResult(
+    grade: '03',
+    pointsNeeded: 33,
+    percentNeeded: 33,
+    pointsNeededRounded: 33,
+  ),
+  GradingScaleResult(
+    grade: '02',
+    pointsNeeded: 27,
+    percentNeeded: 27,
+    pointsNeededRounded: 27,
+  ),
+  GradingScaleResult(
+    grade: '01',
+    pointsNeeded: 20,
+    percentNeeded: 20,
+    pointsNeededRounded: 20,
+  ),
+  GradingScaleResult(
+    grade: '00',
+    pointsNeeded: 0,
+    percentNeeded: 0,
+    pointsNeededRounded: 0,
+  ),
+];
+
 void main() {
   group('RoundingMode', () {
     test('rounds full correctly', () {
@@ -234,7 +333,7 @@ void main() {
             results: [],
             maxPoints: 0,
             mode: RoundingMode.full,
-            gradingWeight: gradingScalesNotes,
+            gradingWeight: defaultGradingWeights,
           ),
         ),
       );
@@ -273,6 +372,29 @@ void main() {
         expect(
           bloc.state.results,
           orderedEquals(gradingResultsFor25PointsRoundedToHalf),
+        );
+      },
+    );
+
+    blocTest<GradingScaleCubit, GradingState>(
+      'emits correct grading scales for custom weights',
+      build: GradingScaleCubit.new,
+      act: (cubit) => cubit
+        ..setPoints(100)
+        ..setMode(RoundingMode.full)
+        ..setWeight(
+          const GradingWeight(
+            grade: 15,
+            lowerBound: 100,
+            upperBound: 100,
+          ),
+        ),
+      verify: (bloc) {
+        expect(bloc.state.mode, equals(RoundingMode.full));
+        expect(bloc.state.maxPoints, equals(100));
+        expect(
+          bloc.state.results,
+          orderedEquals(gradingResultsFor100PointsCustomWeight),
         );
       },
     );

@@ -8,8 +8,8 @@ class GradingWeightForm extends StatelessWidget {
     super.key,
   });
 
-  final List<GradingScaleNoteSetup> weights;
-  final void Function(GradingScaleNoteSetup setup) onChange;
+  final List<GradingWeight> weights;
+  final void Function(GradingWeight setup) onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +50,10 @@ class _WeightInput extends StatelessWidget {
     required this.min,
     required this.onChange,
   });
-  final GradingScaleNoteSetup weight;
+  final GradingWeight weight;
   final int min;
   final int max;
-  final void Function(GradingScaleNoteSetup setup) onChange;
+  final void Function(GradingWeight setup) onChange;
 
   @override
   Widget build(BuildContext context) {

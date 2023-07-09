@@ -24,7 +24,7 @@ class GradingScaleView extends StatefulWidget {
 }
 
 class _GradingScaleViewState extends State<GradingScaleView> {
-  bool isEdit = true;
+  bool isEdit = false;
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
