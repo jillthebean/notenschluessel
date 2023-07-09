@@ -80,6 +80,5 @@ class _WeightInput extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }

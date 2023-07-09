@@ -1,13 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-
 import 'package:notenschluessel/grading_scale/grading_scale.dart';
 import 'package:notenschluessel/grading_scale/model/grading_scale_model.dart';
-import 'package:notenschluessel/grading_scale/widgets/widgets.dart';
 
 import '../../helpers/helpers.dart';
 
