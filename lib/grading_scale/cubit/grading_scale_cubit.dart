@@ -27,7 +27,7 @@ class GradingState {
   final RoundingMode mode;
   final List<GradingWeight> gradingWeight;
   final List<GradingScaleResult> results;
-  final int maxPoints;
+  final double maxPoints;
 }
 
 class GradingScaleCubit extends Cubit<GradingState> {
@@ -41,7 +41,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
           ),
         );
 
-  void setPoints(int points) => _calculate(
+  void setPoints(double points) => _calculate(
         GradingState(
           mode: state.mode,
           results: [],
@@ -76,7 +76,7 @@ class GradingScaleCubit extends Cubit<GradingState> {
     final results = state.maxPoints > 0
         ? state.gradingWeight.map((e) {
             final pointsNeeded100 =
-                state.maxPoints.toDouble() * e.lowerBound.toDouble() / 100;
+                state.maxPoints * e.lowerBound.toDouble() / 100;
             return GradingScaleResult(
               grade: e.gradeString,
               pointsNeeded: pointsNeeded100,
