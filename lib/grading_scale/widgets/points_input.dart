@@ -60,7 +60,7 @@ class _PointsInputState extends State<PointsInput> {
           TextInputFormatter.withFunction(
             (oldValue, newValue) =>
                 validText(newValue.text) ? newValue : oldValue,
-          )
+          ),
         ],
       ),
     );

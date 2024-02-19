@@ -39,7 +39,7 @@ class _GradingScaleViewState extends State<GradingScaleView> {
               'https://recht.saarland.de/bssl/document/jlr-OberStVSL2007V3Anlage14',
             ),
             icon: const Icon(Icons.open_in_new),
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -90,7 +90,7 @@ class _GradingScaleResultsView extends StatelessWidget {
             child: GradingScaleResultWidget(
               results: grading.state.results,
             ),
-          )
+          ),
         ],
       ),
     );
@@ -114,7 +114,7 @@ class _GradingScaleResultsView extends StatelessWidget {
         ),
         GradingScaleResultWidget(
           results: grading.state.results,
-        )
+        ),
       ],
     );
   }
