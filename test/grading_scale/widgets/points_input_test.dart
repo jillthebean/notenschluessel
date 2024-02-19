@@ -28,7 +28,11 @@ void main() {
         ),
       );
       await tester.enterText(find.byType(TextFormField), 'abcdef');
-      expect(find.text('30'), findsOneWidget);
+      final textFieldFinder = find.byType(TextFormField);
+      expect(textFieldFinder, findsOne);
+      final textField =
+          textFieldFinder.evaluate().first.widget as TextFormField;
+      expect(double.parse(textField.controller!.text), 30);
     });
 
     testWidgets('does not allow 0 points', (tester) async {
